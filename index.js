@@ -20,3 +20,9 @@ app.message(/^ping$/i, ({ message, say }) => {
     say("pong");
   }
 });
+
+(async () => {
+  // Start your app
+  await app.start(PORT || 3000);
+  console.log("⚡️ Bolt app is running!");
+})();
