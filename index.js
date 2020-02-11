@@ -31,20 +31,10 @@ app.event("reaction_added", async ({ event, context, say }) => {
   const honks = ["honk", "honk-intensifies"];
 
   if (honks.includes(event.reaction)) {
-    // get user info of user who reacted to this message
-    const user = await app.client.users.info({
-      token: context.botToken,
-      user: event.user
-    });
-
-    // formatting the user's name to mention that user in the message (see: https://api.slack.com/messaging/composing/formatting)
-    let name = "<@" + user.user.id + ">";
-
     say(
-      `${name} ` +
-        messages.honk_responses[
-          parseInt(Math.random() * messages.honk_responses.length)
-        ].text
+      messages.honk_responses[
+        parseInt(Math.random() * messages.honk_responses.length)
+      ].text
     );
   }
 });
