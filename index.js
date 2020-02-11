@@ -6,7 +6,7 @@ const {
   PORT
 } = require("./config");
 const { App } = require("@slack/bolt");
-const { messages } = require("./messages");
+const messages = require("./messages");
 
 const app = new App({
   token: SLACK_TOKEN,
