@@ -44,7 +44,7 @@ app.event("reaction_added", async ({ event, context, say }) => {
       `${name} ` +
         messages.honk_responses[
           parseInt(Math.random() * messages.honk_responses.length)
-        ]
+        ].text
     );
   }
 });
