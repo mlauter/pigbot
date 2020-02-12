@@ -26,7 +26,7 @@ app.message(/^ping$/i, ({ message, say }) => {
  * `reaction_added` event is triggered when a user adds a reaction to a message in a channel where the Bot User is part of
  * https://api.slack.com/events/reaction_added
  **/
-app.event("reaction_added", async ({ event, context, say }) => {
+app.event("reaction_added", ({ event, context, say }) => {
   // only react to custom (:honk*:) emoji
   const honks = ["honk", "honk-intensifies"];
 
