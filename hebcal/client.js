@@ -99,7 +99,7 @@ const parashatHashavuah = async (tzid, geocodeFn) => {
 
   try {
     const response = await shabbatTimes(lat, lng, tzid);
-    return r.items.filter(item => item.category === "parashat")[0].title;
+    return response.items.filter(item => item.category === "parashat")[0].title;
   } catch (e) {
     console.log(e);
     return "";
