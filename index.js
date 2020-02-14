@@ -79,6 +79,26 @@ app.message(
   }
 );
 
+app.message(
+  directMention(),
+  /what is (this week\'?s para?sha|para?shat ha\s?shavuah?)\??/i,
+  async ({ message, context, say }) => {
+    const user = await app.client.users.info({
+      token: context.botToken,
+      user: message.user
+    });
+
+    const tzid = user.user.tz || "America/New_York";
+    const parsha = await hebcal.parashatHashavuah(tzid, geocoder());
+    if (parsha === "") {
+      say(messages.genericError.text);
+      return;
+    }
+
+    say(messages.parashatHashavuah.fn(parsha));
+  }
+);
+
 /**
  * `reaction_added` event is triggered when a user adds a reaction to a message in a channel where the Bot User is part of
  * https://api.slack.com/events/reaction_added

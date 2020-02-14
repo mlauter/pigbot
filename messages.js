@@ -18,6 +18,11 @@ module.exports = {
       return `Candle lighting time for ${chag} in ${city} is ${time}`;
     }
   },
+  parashatHashavuah: {
+    fn: parsha => {
+      return `This week's parsha is ${parsha}`;
+    }
+  },
   genericError: {
     text: "Uh oh. Something went wrong, sorry."
   }
