@@ -5,7 +5,7 @@ const {
   LOG_LEVEL,
   PORT
 } = require("./config");
-const { App } = require("@slack/bolt");
+const { App, directMention } = require("@slack/bolt");
 const messages = require("./messages");
 const geocoder = require("./geocoder");
 const hebcal = require("./hebcal/client");
