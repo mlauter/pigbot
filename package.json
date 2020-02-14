@@ -14,9 +14,12 @@
     "pretty-quick": "pretty-quick --staged"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^2.0.2",
     "@slack/bolt": "^1.6.0",
+    "abort-controller": "^3.0.0",
     "dotenv": "^8.2.0",
-    "escape-string-regexp": "^2.0.0"
+    "escape-string-regexp": "^2.0.0",
+    "node-fetch": "^2.6.0"
   },
   "engines": {
     "node": "10.x",

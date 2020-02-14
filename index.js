@@ -7,6 +7,8 @@ const {
 } = require("./config");
 const { App } = require("@slack/bolt");
 const messages = require("./messages");
+const geocoder = require("./geocoder");
+const hebcal = require("./hebcal/client");
 
 const app = new App({
   token: SLACK_TOKEN,
@@ -21,6 +23,35 @@ app.message(/^ping$/i, ({ message, say }) => {
     say("pong");
   }
 });
+
+// TODO: allow users to ask about a specific location
+app.message(
+  directMention(),
+  /what time is (candle\s?lighting|shabbat)\??/i,
+  async ({ message, context, say }) => {
+    const user = await app.client.users.info({
+      token: context.botToken,
+      user: message.user,
+      include_locale: true
+    });
+
+    const tzid = user.user.tz || "America/New_York",
+      locale = user.user.locale || "en-US",
+      [_, city] = tzid.split("/").replace("_", " ");
+
+    const candleLightingTime = await hebcal.candleLightingTime(
+      locale,
+      tzid,
+      geocoder()
+    );
+    if (candleLightingTime === "") {
+      say("Uh oh. Something went wrong, sorry.");
+      return;
+    }
+
+    say(`Candle lighting time for Shabbat in ${city} is ${candleLightingTime}`);
+  }
+);
 
 /**
  * `reaction_added` event is triggered when a user adds a reaction to a message in a channel where the Bot User is part of
