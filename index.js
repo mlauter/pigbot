@@ -37,7 +37,8 @@ app.message(
 
     const tzid = user.user.tz || "America/New_York",
       locale = user.user.locale || "en-US",
-      [_, city] = tzid.split("/").replace("_", " ");
+      [_, city] = tzid.split("/"),
+      fmtCity = city.replace("_", " ");
 
     const candleLightingTime = await hebcal.candleLightingTime(
       locale,
@@ -49,7 +50,9 @@ app.message(
       return;
     }
 
-    say(`Candle lighting time for Shabbat in ${city} is ${candleLightingTime}`);
+    say(
+      `Candle lighting time for Shabbat in ${fmtCity} is ${candleLightingTime}`
+    );
   }
 );
 
