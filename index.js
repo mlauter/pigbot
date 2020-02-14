@@ -27,7 +27,7 @@ app.message(/^ping$/i, ({ message, say }) => {
 // TODO: allow users to ask about a specific location
 app.message(
   directMention(),
-  /what time is (candle\s?lighting|shabbat)\??/i,
+  /(what time|when) is (candle\s?lighting|shabbat)\??/i,
   async ({ message, context, say }) => {
     const user = await app.client.users.info({
       token: context.botToken,
@@ -46,13 +46,36 @@ app.message(
       geocoder()
     );
     if (candleLightingTime === "") {
-      say("Uh oh. Something went wrong, sorry.");
+      say(messages.genericError.text);
       return;
     }
 
-    say(
-      `Candle lighting time for Shabbat in ${fmtCity} is ${candleLightingTime}`
-    );
+    say(messages.candleLightingTime.fn(fmtCity, candleLightingTime));
+  }
+);
+
+app.message(
+  directMention(),
+  /(what time|when) is (havdalah|havdallah|havdala)\??/i,
+  async ({ message, context, say }) => {
+    const user = await app.client.users.info({
+      token: context.botToken,
+      user: message.user,
+      include_locale: true
+    });
+
+    const tzid = user.user.tz || "America/New_York",
+      locale = user.user.locale || "en-US",
+      [_, city] = tzid.split("/"),
+      fmtCity = city.replace("_", " ");
+
+    const havdalahTime = await hebcal.havdalahTime(locale, tzid, geocoder());
+    if (havdalahTime === "") {
+      say(messages.genericError.text);
+      return;
+    }
+
+    say(messages.candleLightingTime.fn(fmtCity, havdalahTime, "Havadalah"));
   }
 );
 

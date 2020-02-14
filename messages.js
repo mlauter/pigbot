@@ -12,5 +12,13 @@ module.exports = {
       text:
         ":carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :carrot: :radio:"
     }
-  ]
+  ],
+  candleLightingTime: {
+    fn: (city, time, chag = "Shabbat") => {
+      return `Candle lighting time for ${chag} in ${city} is ${time}`;
+    }
+  },
+  genericError: {
+    text: "Uh oh. Something went wrong, sorry."
+  }
 };
